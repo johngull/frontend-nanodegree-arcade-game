@@ -48,8 +48,8 @@ Enemy.prototype.update = function(dt) {
 };
 
 Enemy.prototype.resetPositionAndSpeed = function() {
-    col = -1;
-    row = Math.floor(Math.random()*3+1);
+    var col = -1;
+    var row = Math.floor(Math.random()*3+1);
     this.setPosition(col*101, row*83);
     this.speed = Math.floor(Math.random()*500+50);
 };
@@ -108,7 +108,7 @@ Player.prototype.handleInput = function(direction) {
 // Place the player object in a variable called player
     var player = new Player(5,2);
     var allEnemies = [];
-    for(i=0;i<3;i++)
+    for(var i=0;i<3;i++)
         allEnemies.push(new Enemy());
 
 
