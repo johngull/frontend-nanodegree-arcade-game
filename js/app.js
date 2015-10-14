@@ -9,6 +9,11 @@ Actor.prototype.movePosition = function(dx, dy) {
     this.y = this.y + dy;
 };
 
+Actor.prototype.setPosition = function(x, y) {
+    this.x = x;
+    this.y = y;
+};
+
 Actor.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
@@ -38,17 +43,48 @@ Enemy.prototype.update = function(dt) {
 // a handleInput() method.
 var Player = function(row, col) {
     Actor.call(this, col*101, row*83);
+
+    this.row = row;
+    this.col = col;
+    this.direction = "none";
     this.sprite = "images/char-boy.png";
 };
 
 Player.prototype = Object.create(Actor.prototype);
 
 Player.prototype.update = function(dt) {
+    switch(this.direction) {
+        case "left":
+            this.col = this.col-1;
+            break;
+        case "up":
+            this.row = this.row-1;
+            break;
+        case "right":
+            this.col = this.col+1;
+            break;
+        case "down":
+            this.row = this.row+1;
+            break;
+        default:
+            break;
+    }
+    this.direction = "none";
 
+    if(this.row<0)
+        this.row = 0;
+    if(this.row>5)
+        this.row = 5;
+    if(this.col<0)
+        this.col = 0;
+    if(this.col>4)
+        this.col = 4;
+
+    this.setPosition(this.col*101, this.row*83);
 };
 
-Player.prototype.handleInput = function() {
-  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+Player.prototype.handleInput = function(direction) {
+  this.direction = direction;
 };
 
 // Now instantiate your objects.
