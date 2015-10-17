@@ -80,7 +80,11 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        checkCollisions();
+        if(checkCollisions())
+            resetPositions();
+        else
+            if(checkWinState())
+                resetPositions();
     }
 
     /* This is called by the update function  and loops through all of the
@@ -97,19 +101,24 @@ var Engine = (function(global) {
         player.update();
     }
 
+    function resetPositions() {
+        allEnemies.forEach(function(enemy) {
+            enemy.resetPositionAndSpeed();
+        });
+        player.resetPosition();
+    }
+
     function checkCollisions() {
         var gameOver = false;
         allEnemies.forEach(function(enemy) {
             if(enemy.isCollisionWith(player))
                 gameOver = true;
         });
-        if(gameOver) {
-            allEnemies.forEach(function(enemy) {
-                enemy.resetPositionAndSpeed();
-            });
-            player.resetPosition();
-        }
+        return gameOver;
+    }
 
+    function checkWinState() {
+        return player.isWinPosition();
     }
 
     /* This function initially draws the "game level", it will then call

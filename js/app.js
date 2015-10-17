@@ -33,7 +33,7 @@ Actor.prototype.render = function() {
 };
 
 Actor.prototype.isCollisionWith = function(other) {
-    return (Math.abs(this.x-other.x)<constants.xSize && Math.abs(this.y-other.y)<constants.ySize);
+    return (Math.abs(this.x-other.x)<constants.xSize/2 && Math.abs(this.y-other.y)<constants.ySize/2);
 };
 
 
@@ -90,6 +90,10 @@ Player.prototype.resetPosition = function() {
     this.row = constants.playerRow;
     this.col = constants.playerCol;
     this.setPosition(this.col*constants.xSize, this.row*constants.ySize);
+};
+
+Player.prototype.isWinPosition = function() {
+    return this.row==constants.winRow;
 };
 
 Player.prototype.update = function(/*dt*/) {
