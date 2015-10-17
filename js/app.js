@@ -47,7 +47,7 @@ var Enemy = function() {
     this.resetPositionAndSpeed();
 
     //random place on start for nice start
-    this.setPosition(Math.floor(Math.random()*(constants.xSize)*constants.rowCount-constants.xSize), this.y);
+    this.randomX();
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
@@ -72,6 +72,10 @@ Enemy.prototype.resetPositionAndSpeed = function() {
     var row = Math.floor(Math.random()*3+1);
     this.setPosition(col*constants.xSize, row*constants.ySize);
     this.speed = Math.floor(Math.random()*constants.maxSpeed+constants.minSpeed);
+};
+
+Enemy.prototype.randomX = function() {
+    this.setPosition(Math.floor(Math.random()*(constants.xSize)*constants.rowCount-constants.xSize), this.y);
 };
 
 // Now write your own player class
@@ -133,7 +137,7 @@ Player.prototype.handleInput = function(direction) {
   this.direction = direction;
 };
 
-
+//Score indicator
 Indicator = function(x, y) {
     this.current = 0;
     this.best = 0;

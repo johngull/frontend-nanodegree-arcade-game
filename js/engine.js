@@ -108,6 +108,7 @@ var Engine = (function(global) {
     function resetPositions() {
         allEnemies.forEach(function(enemy) {
             enemy.resetPositionAndSpeed();
+            enemy.randomX();
         });
         player.resetPosition();
     }
