@@ -8,7 +8,9 @@ var constants = {
     "maxSpeed" : 500,
     "playerRow" : 5,
     "playerCol" : 2,
-    "winRow" : 0
+    "winRow" : 0,
+    "IndicatorRow" : 6,
+    "IndicatorCol" : 0
 
 };
 
@@ -131,6 +133,31 @@ Player.prototype.handleInput = function(direction) {
   this.direction = direction;
 };
 
+
+Indicator = function(x, y) {
+    this.current = 0;
+    this.best = 0;
+    this.x = x;
+    this.y = y;
+};
+
+Indicator.prototype.increaseCurrent = function(increase) {
+    this.current = this.current + increase;
+} ;
+
+Indicator.prototype.lost = function() {
+    this.best = Math.max(this.current, this.best);
+    this.current = 0;
+};
+
+Indicator.prototype.render = function() {
+    ctx.font = "40px Arial";
+    ctx.fillStyle = "black";
+    ctx.fillText("Score: "+ this.current, this.x+constants.xSize/4, this.y);
+    ctx.fillStyle = "red";
+    ctx.fillText("Best: " + this.best, this.x+constants.xSize/4, this.y+constants.ySize/2);
+};
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
@@ -138,7 +165,7 @@ Player.prototype.handleInput = function(direction) {
     var allEnemies = [];
     for(var i=0;i<3;i++)
         allEnemies.push(new Enemy());
-
+    indicator = new Indicator(constants.IndicatorCol*constants.xSize, constants.IndicatorRow*constants.ySize);
 
 
 // This listens for key presses and sends the keys to your

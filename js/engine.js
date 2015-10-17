@@ -80,11 +80,15 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        if(checkCollisions())
+        if(checkCollisions()) {
             resetPositions();
+            indicator.lost();
+        }
         else
-            if(checkWinState())
+            if(checkWinState()) {
                 resetPositions();
+                indicator.increaseCurrent(1);
+            }
     }
 
     /* This is called by the update function  and loops through all of the
@@ -177,6 +181,7 @@ var Engine = (function(global) {
         });
 
         player.render();
+        indicator.render();
     }
 
     /* This function does nothing but it could have been a good place to
